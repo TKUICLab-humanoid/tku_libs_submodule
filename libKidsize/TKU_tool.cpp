@@ -1,6 +1,6 @@
 #include "tku_libs/TKU_tool.h"
-// Tool* tool = new Tool;
-ToolInstance* ToolInstance::m_pInstance;
+
+ToolInstance *ToolInstance::m_pInstance;
 
 Tool::Tool()
 {
@@ -10,21 +10,6 @@ Tool::Tool()
 Tool::~Tool()
 {
 
-}
-
-ToolInstance* ToolInstance::getInstance()
-{
-    if(!m_pInstance)m_pInstance = new ToolInstance();
-    return m_pInstance;
-}
-
-void ToolInstance::deleteInstance()
-{
-    if(m_pInstance)
-    {
-        delete m_pInstance;
-        m_pInstance = NULL;
-    }
 }
 
 string Tool::getPackagePath(string package_name)
@@ -168,14 +153,45 @@ void Tool::Delay(int timedelay)
     }
 }
 
-TimeClass::TimeClass(double check_time_ms)
+ToolInstance::ToolInstance() : Tool()
 {
-	this->check_time_ms = check_time_ms;
+    m_pInstance = nullptr;
+}
+
+ToolInstance::~ToolInstance()
+{
+
+}
+
+ToolInstance* ToolInstance::getInstance()
+{
+    if(!m_pInstance)m_pInstance = new ToolInstance();
+    return m_pInstance;
+}
+
+void ToolInstance::deleteInstance()
+{
+    if(m_pInstance)
+    {
+        delete m_pInstance;
+        m_pInstance = nullptr;
+    }
 }
 
 TimeClass::TimeClass()
 {
-	// initialize();
+    start = 0;
+    end = 0;
+    timeMs = 0;
+    checkTimeMs = 1000;
+}
+
+TimeClass::TimeClass(double checkTimeMs)
+{
+    start = 0;
+    end = 0;
+    timeMs = 0;
+	this->checkTimeMs = checkTimeMs;
 }
 
 TimeClass::~TimeClass()
@@ -183,44 +199,44 @@ TimeClass::~TimeClass()
 
 }
 
-void TimeClass::updateTime()
-{
-	end = ros::WallTime::now().toSec();
-	time_ms = 1000.0*(end - start);
-}
-
 void TimeClass::initialize()
 {
-	start = ros::WallTime::now().toSec();
-	end = start;
-	time_ms = 0;
+    start = ros::WallTime::now().toSec();
+    end = start;
+    timeMs = 0;
 }
 
-void TimeClass::setTimerPass(double check_time_ms, bool init_flag)
+void TimeClass::setTimerPass(double checkTimeMs, bool initFlag)
 {
-	this->check_time_ms = check_time_ms;
-	if (init_flag)initialize();
+    if(initFlag)initialize();
+    this->checkTimeMs = checkTimeMs;
+}
+
+void TimeClass::updateTime()
+{
+    end = ros::WallTime::now().toSec();
+    timeMs = 1000.0 * (end - start);
+}
+
+double TimeClass::getPeriodTimeMs()
+{
+	return checkTimeMs;
 }
 
 double TimeClass::getTimeMs()
 {
-	updateTime();
-	return time_ms;
+    updateTime();
+    return timeMs;
 }
 
 bool TimeClass::checkTimePass()
 {
-	if (getTimeMs() > check_time_ms)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+    if(getTimeMs() > checkTimeMs)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
-double TimeClass::getPeriodTimeMs()
-{
-	return check_time_ms;
-}
-

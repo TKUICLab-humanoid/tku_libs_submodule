@@ -1,65 +1,17 @@
 #include "tku_libs/RobotCupInfo.h"
 
-StrE::object[]    = {"goal", "ball"};
-StrE::enemy[]     = {"enemy1", "enemy2", "enemy3", "enemy4"};
-StrE::robot[]     = {"robot1", "robot2", "robot3", "robot4"};
-StrE::character[] = {"myself", "attacker", "suporter1", "suporter2", "defender", "free", "null"};
-StrE::PRS[]       = {"RA", "R12", "R13", "R14", "R23", "R24", "R34", "R1", "R2", "R3", "R4", "R"};
-StrE::objectSize = sizeof(StrE::object)/sizeof(StrE::object[0]);
-StrE::enemySize = sizeof(StrE::enemy)/sizeof(StrE::enemy[0]);
-StrE::robotSize = sizeof(StrE::robot)/sizeof(StrE::robot[0]);
-StrE::characterSize = sizeof(StrE::character)/sizeof(StrE::character[0]);
-StrE::PRSSize = sizeof(StrE::PRS)/sizeof(StrE::PRS[0]);
+std::string StrE::object[]    = {"goal", "ball"};
+std::string StrE::enemy[]     = {"enemy1", "enemy2", "enemy3", "enemy4"};
+std::string StrE::robot[]     = {"robot1", "robot2", "robot3", "robot4"};
+std::string StrE::character[] = {"myself", "attacker", "suporter1", "suporter2", "defender", "free", "null"};
+std::string StrE::PRS[]       = {"RA", "R12", "R13", "R14", "R23", "R24", "R34", "R1", "R2", "R3", "R4", "R"};
+unsigned int StrE::objectSize = sizeof(StrE::object)/sizeof(StrE::object[0]);
+unsigned int StrE::enemySize = sizeof(StrE::enemy)/sizeof(StrE::enemy[0]);
+unsigned int StrE::robotSize = sizeof(StrE::robot)/sizeof(StrE::robot[0]);
+unsigned int StrE::characterSize = sizeof(StrE::character)/sizeof(StrE::character[0]);
+unsigned int StrE::PRSSize = sizeof(StrE::PRS)/sizeof(StrE::PRS[0]);
 
-TimeClass::TimeClass()
-{
-    start = 0;
-    end = 0;
-    timeMs = 0;
-    checkTimeMs = 1000;
-}
-
-TimeClass::~TimeClass()
-{
-
-}
-
-void TimeClass::initialize()
-{
-    start = ros::WallTime::now().toSec();
-    end = start;
-    timeMs = 0;
-}
-
-void TimeClass::setTimerPass(double checkTimeMs, bool initFlag)
-{
-    if(initFlag)initialize();
-    this->checkTimeMs = checkTimeMs;
-}
-
-void TimeClass::updateTime()
-{
-    end = ros::WallTime::now().toSec();
-    timeMs = 1000.0 * (end - start);
-}
-
-double TimeClass::getTimeMs()
-{
-    updateTime();
-    return timeMs;
-}
-
-bool TimeClass::checkTimePass()
-{
-    if(getTimeMs() > checkTimeMs)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
+RobotCupInfo *RobotCupInfo::m_pInstance;
 
 ObjectInfoBase::WhitchData::WhitchData()
 {
@@ -308,7 +260,7 @@ RobotCupInfoBase::RobotCupInfoBase()
     system(strTemp.c_str());
     if (nh.getParam("/robotCupInfo", paramData) && paramData.getType() == XmlRpc::XmlRpcValue::TypeArray)
     {
-        std::string whichRobot = (std::string)param_data[0]["state"]["whichRobot"];
+        std::string whichRobot = (std::string)paramData[0]["state"]["whichRobot"];
         if(whichRobot == StrE::robot[(int)ERobot::robot1] || whichRobot == StrE::robot[(int)ERobot::robot2]
          || whichRobot == StrE::robot[(int)ERobot::robot3] || whichRobot == StrE::robot[(int)ERobot::robot4])
         {
@@ -338,8 +290,6 @@ void RobotCupInfoBase::initialize()
 {
     
 }
-
-RobotCupInfo *RobotCupInfo::m_pInstance;
 
 RobotCupInfo::RobotCupInfo() : RobotCupInfoBase()
 {

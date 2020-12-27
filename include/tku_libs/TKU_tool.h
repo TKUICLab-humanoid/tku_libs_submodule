@@ -24,16 +24,16 @@ class Tool
         string getPackagePath(string package_name);
         float readvalue(fstream &fin, string title,int mode);
         void Delay(int timedelay);
+
 	private:
 		string package_path;
-        // string PATH;
 };
 
 class ToolInstance : public Tool
 {
 	public:
-		ToolInstance() : Tool(){}
-		~ToolInstance(){}
+		ToolInstance();
+		~ToolInstance();
 		static ToolInstance* getInstance();
 		static void deleteInstance();
 
@@ -44,22 +44,22 @@ class ToolInstance : public Tool
 class TimeClass
 {
     public:
-        TimeClass(double check_time_ms);
         TimeClass();
+		TimeClass(double checkTimeMs);
         ~TimeClass();
-        void updateTime();
+
         void initialize();
-        void setTimerPass(double check_time_ms, bool init_flag = true);
-        double getTimeMs();
+        void setTimerPass(double checkTimeMs, bool initFlag = true);
+        void updateTime();
 		double getPeriodTimeMs();
+        double getTimeMs();
         bool checkTimePass();
 
     private:
-        double start = 0;
-        double end = 0;
-        double time_ms = 0;
-        double check_time_ms = 1000;
+        double start;
+        double end;
+        double timeMs;
+        double checkTimeMs;
 };
-// extern Tool* tool;
 
 #endif // TOOL_H

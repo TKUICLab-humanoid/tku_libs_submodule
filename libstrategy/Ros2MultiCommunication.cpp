@@ -1,6 +1,6 @@
 #include "tku_libs/Ros2MultiCommunication.h"
 
-Ros2MultiCommunication* Ros2MultiCommunication::m_pInstance;
+Ros2MultiCommunication *Ros2MultiCommunication::m_pInstance;
 
 Ros2MultiCommunicationBase::Ros2MultiCommunicationBase()
 {
@@ -162,7 +162,7 @@ void Ros2MultiCommunicationBase::callBackRobot4(const tku_msgs::Ros2MultiCommuni
 
 Ros2MultiCommunication::Ros2MultiCommunication() : Ros2MultiCommunicationBase()
 {
-
+    m_pInstance = nullptr;
 }
 
 Ros2MultiCommunication::~Ros2MultiCommunication()

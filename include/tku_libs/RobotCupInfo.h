@@ -1,9 +1,12 @@
 #ifndef ROBOTCUPINFO_H
 #define ROBOTCUPINFO_H
+
 #include <string>
 #include <ros/node_handle.h>
 #include <ros/package.h>
 #include <map>
+
+#include "tku_libs/TKU_tool.h"
 
 enum class EObject {goal, ball};
 enum class EEnemy {enemy1, enemy2, enemy3, enemy4};
@@ -11,25 +14,6 @@ enum class ERobot {robot1, robot2, robot3, robot4};
 enum class ECharacter {myself, attacker, suporter1, suporter2, defender, free, null};
 enum class PRS {RA, R12, R13, R14, R23, R24, R34, R1, R2, R3, R4, R};
 //PRS = Partner Robot State
-
-class TimeClass
-{
-    public:
-        TimeClass();
-        ~TimeClass();
-
-        void initialize();
-        void setTimerPass(double checkTimeMs, bool initFlag = true);
-        void updateTime();
-        double getTimeMs();
-        bool checkTimePass();
-
-    private:
-        double start;
-        double end;
-        double timeMs;
-        double checkTimeMs;
-};
 
 class StrE
 {
