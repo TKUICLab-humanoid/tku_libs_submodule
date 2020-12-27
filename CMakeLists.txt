@@ -15,7 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   roslib
   message_filters
 )
-#set(TKU_LIBRARIES ${CATKIN_DEVEL_PREFIX}/lib/libtku_libs.so)
+
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -106,10 +106,10 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-   INCLUDE_DIRS include
-   LIBRARIES tku_libs roscommunication ros2multicommunication gamecontrollerclient tku_gz_libs
-   CATKIN_DEPENDS roscpp tku_msgs sensor_msgs cv_bridge roslib message_filters
-   DEPENDS system_lib
+  INCLUDE_DIRS include
+  LIBRARIES tku_libs roscommunication ros2multicommunication gamecontrollerclient tku_gz_libs
+  CATKIN_DEPENDS roscpp tku_msgs sensor_msgs cv_bridge roslib message_filters
+  DEPENDS system_lib
 )
 
 ###########
@@ -133,16 +133,16 @@ add_dependencies(tku_libs ${catkin_EXPORTED_TARGETS})
 target_link_libraries(tku_libs ${catkin_LIBRARIES})
 
 add_library(roscommunication 
-libstrategy/RosCommunication.cpp 
-libstrategy/strategy_info.cpp 
-libstrategy/WalkContinuouse.cpp
+  libstrategy/RosCommunication.cpp 
+  libstrategy/strategy_info.cpp 
+  libstrategy/WalkContinuouse.cpp
 )
 add_dependencies(roscommunication ${catkin_EXPORTED_TARGETS})
 target_link_libraries(roscommunication ${catkin_LIBRARIES} tku_libs)
 
 add_library(ros2multicommunication 
-libstrategy/RobotCupInfo.cpp 
-libstrategy/Ros2MultiCommunication.cpp
+  libstrategy/RobotCupInfo.cpp 
+  libstrategy/Ros2MultiCommunication.cpp
 )
 add_dependencies(ros2multicommunication ${catkin_EXPORTED_TARGETS})
 target_link_libraries(ros2multicommunication ${catkin_LIBRARIES} tku_libs)
