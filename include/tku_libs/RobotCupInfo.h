@@ -59,7 +59,7 @@ class ObjectInfoBase
         std::string name;
         float x;
         float y;
-        bool existFlag;
+        bool exist_flag;
         WhitchData theta;
         WhitchData dist;
 };
@@ -80,7 +80,7 @@ class CharacterInfo : public ObjectInfoBase
         virtual void initialize() override;
 
     public:
-        std::string whichRobot;
+        std::string which_robot;
         std::map<std::string, ObjectInfo> object;
         std::map<std::string, ObjectInfo> enemy;
 };

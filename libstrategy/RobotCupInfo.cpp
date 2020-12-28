@@ -35,7 +35,7 @@ ObjectInfoBase::ObjectInfoBase()
     name = StrE::character[(int)ECharacter::null];
     x = 0;
     y = 0;
-    existFlag = false;
+    exist_flag = false;
     theta.initialize();
     dist.initialize();
 }
@@ -49,7 +49,7 @@ void ObjectInfoBase::initialize()
 {
     x = 0;
     y = 0;
-    existFlag = false;
+    exist_flag = false;
     theta.initialize();
     dist.initialize();
 }
@@ -66,7 +66,7 @@ ObjectInfo::~ObjectInfo()
 
 CharacterInfo::CharacterInfo() : ObjectInfoBase()
 {
-    whichRobot = "";
+    which_robot = "";
     ObjectInfo objectTemp;
     for(int i = 0; i < StrE::objectSize; i++)
     {
@@ -90,7 +90,7 @@ void CharacterInfo::initialize()
     name = StrE::character[(int)ECharacter::null];
     x = 0;
     y = 0;
-    existFlag = false;
+    exist_flag = false;
     theta.initialize();
     dist.initialize();
     for(std::map<std::string, ObjectInfo>::iterator it = object.begin(); it != object.end(); it++)it->second.initialize();
@@ -102,7 +102,7 @@ NormalCharacterBase::NormalCharacterBase()
     CharacterInfo *characterTemp = new CharacterInfo[StrE::robotSize];
     for(int i = 0; i < StrE::robotSize; i++)
     {
-        characterTemp[i].whichRobot = StrE::robot[i];
+        characterTemp[i].which_robot = StrE::robot[i];
         who[StrE::robot[i]] = &characterTemp[i];
     }
     TimeClass timeClassTemp;
@@ -177,7 +177,7 @@ std::string NormalCharacterBase::getPRS()
     std::string temp = "R";
     for(std::map<std::string, TimeClass>::iterator it = callBackTimer.begin(); it != callBackTimer.end(); it++)
     {
-        if(it->first != who[StrE::character[(int)ECharacter::myself]]->whichRobot)
+        if(it->first != who[StrE::character[(int)ECharacter::myself]]->which_robot)
         {
             if(it->second.checkTimePass())
             {
@@ -196,7 +196,7 @@ void NormalCharacterBase::setTimerPass(double checkTimeMs, bool initFlag)
 {
     for(std::map<std::string, TimeClass>::iterator it = callBackTimer.begin(); it != callBackTimer.end(); it++)
     {
-        if(it->first != who[StrE::character[(int)ECharacter::myself]]->whichRobot)
+        if(it->first != who[StrE::character[(int)ECharacter::myself]]->which_robot)
         {
             it->second.setTimerPass(checkTimeMs, initFlag);
         }
@@ -216,20 +216,20 @@ void NormalCharacterBase::testShow()
             it++;
             if(it == who.end())return;
         }
-        std::printf("%-10s {%-10sx = %-8.2f, y = %-8.2f, existFlag = %-d, theta[ local = %-8.2f, global = %-8.2f], dist[ local = %-8.2f, global = %-8.2f]}\n"
-        , it->second->whichRobot.c_str(), it->second->name.c_str(), it->second->x, it->second->y, it->second->existFlag
+        std::printf("%-10s {%-10sx = %-8.2f, y = %-8.2f, exist_flag = %-d, theta[ local = %-8.2f, global = %-8.2f], dist[ local = %-8.2f, global = %-8.2f]}\n"
+        , it->second->which_robot.c_str(), it->second->name.c_str(), it->second->x, it->second->y, it->second->exist_flag
         , it->second->theta.local, it->second->theta.global, it->second->dist.local, it->second->dist.global);
 
         for(std::map<std::string, ObjectInfo>::iterator itt = it->second->object.begin(); itt != it->second->object.end(); itt++)
         {
-            std::printf("%-10s {%-10sx = %-8.2f, y = %-8.2f, existFlag = %-d, theta[ local = %-8.2f, global = %-8.2f], dist[ local = %-8.2f, global = %-8.2f]}\n"
-            , it->second->name.c_str(), itt->second.name.c_str(), itt->second.x, itt->second.y, itt->second.existFlag
+            std::printf("%-10s {%-10sx = %-8.2f, y = %-8.2f, exist_flag = %-d, theta[ local = %-8.2f, global = %-8.2f], dist[ local = %-8.2f, global = %-8.2f]}\n"
+            , it->second->name.c_str(), itt->second.name.c_str(), itt->second.x, itt->second.y, itt->second.exist_flag
             , itt->second.theta.local, itt->second.theta.global, itt->second.dist.local, itt->second.dist.global);
         }
         for(std::map<std::string, ObjectInfo>::iterator itt = it->second->enemy.begin(); itt != it->second->enemy.end(); itt++)
         {
-            std::printf("%-10s {%-10sx = %-8.2f, y = %-8.2f, existFlag = %-d, theta[ local = %-8.2f, global = %-8.2f], dist[ local = %-8.2f, global = %-8.2f]}\n"
-            , it->second->name.c_str(), itt->second.name.c_str(), itt->second.x, itt->second.y, itt->second.existFlag
+            std::printf("%-10s {%-10sx = %-8.2f, y = %-8.2f, exist_flag = %-d, theta[ local = %-8.2f, global = %-8.2f], dist[ local = %-8.2f, global = %-8.2f]}\n"
+            , it->second->name.c_str(), itt->second.name.c_str(), itt->second.x, itt->second.y, itt->second.exist_flag
             , itt->second.theta.local, itt->second.theta.global, itt->second.dist.local, itt->second.dist.global);
         }
     }
@@ -260,21 +260,21 @@ RobotCupInfoBase::RobotCupInfoBase()
     system(strTemp.c_str());
     if (nh.getParam("/robotCupInfo", paramData) && paramData.getType() == XmlRpc::XmlRpcValue::TypeArray)
     {
-        std::string whichRobot = (std::string)paramData[0]["state"]["whichRobot"];
-        if(whichRobot == StrE::robot[(int)ERobot::robot1] || whichRobot == StrE::robot[(int)ERobot::robot2]
-         || whichRobot == StrE::robot[(int)ERobot::robot3] || whichRobot == StrE::robot[(int)ERobot::robot4])
+        std::string which_robot = (std::string)paramData[0]["state"]["which_robot"];
+        if(which_robot == StrE::robot[(int)ERobot::robot1] || which_robot == StrE::robot[(int)ERobot::robot2]
+         || which_robot == StrE::robot[(int)ERobot::robot3] || which_robot == StrE::robot[(int)ERobot::robot4])
         {
             for(int i = 0; i < StrE::robotSize; i++)
             {
                 characterInfo->who[StrE::robot[i]]->name = (std::string)paramData[0]["state"][StrE::robot[i]];
                 topicNames[StrE::robot[i]] = (std::string)paramData[0]["topic"][StrE::robot[i]];
             }
-            characterInfo->who[StrE::character[(int)ECharacter::myself]] = characterInfo->who[whichRobot];
+            characterInfo->who[StrE::character[(int)ECharacter::myself]] = characterInfo->who[which_robot];
         }
         else
         {
-            ROS_ERROR("whichRobot name = %s", whichRobot.c_str());
-            ROS_ERROR("Correct whichRobot name is robot1 or robot2 or robot3 or robot4");
+            ROS_ERROR("which_robot name = %s", which_robot.c_str());
+            ROS_ERROR("Correct which_robot name is robot1 or robot2 or robot3 or robot4");
             ROS_INFO("Please Ctrl+C to exit");
             while(ros::ok());
         }
