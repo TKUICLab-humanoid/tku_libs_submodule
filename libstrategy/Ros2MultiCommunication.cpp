@@ -49,8 +49,8 @@ bool Ros2MultiCommunicationBase::Initialized()
 
 void Ros2MultiCommunicationBase::sendRobotCupInfo(RobotCupInfo *robotCupInfo)
 {
-    tku_msgs::ObjectInfo enemyTemp;
-    tku_msgs::ObjectInfo objectTemp;
+    tku_msgs::RCObjectInfo enemyTemp;
+    tku_msgs::RCObjectInfo objectTemp;
     tku_msgs::CharacterInfo characterTemp;
     tku_msgs::Ros2MultiCommunication myself;
 

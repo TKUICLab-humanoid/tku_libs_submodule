@@ -13,24 +13,24 @@ unsigned int StrE::PRSSize = sizeof(StrE::PRS)/sizeof(StrE::PRS[0]);
 
 RobotCupInfo *RobotCupInfo::m_pInstance;
 
-ObjectInfoBase::WhitchData::WhitchData()
+RCObjectInfoBase::WhitchData::WhitchData()
 {
     local = 0;
     global = 0;
 }
 
-ObjectInfoBase::WhitchData::~WhitchData()
+RCObjectInfoBase::WhitchData::~WhitchData()
 {
 
 }
 
-void ObjectInfoBase::WhitchData::initialize()
+void RCObjectInfoBase::WhitchData::initialize()
 {
     local = 0;
     global = 0;
 }
 
-ObjectInfoBase::ObjectInfoBase()
+RCObjectInfoBase::RCObjectInfoBase()
 {
     name = StrE::character[(int)ECharacter::null];
     x = 0;
@@ -40,12 +40,12 @@ ObjectInfoBase::ObjectInfoBase()
     dist.initialize();
 }
 
-ObjectInfoBase::~ObjectInfoBase()
+RCObjectInfoBase::~RCObjectInfoBase()
 {
 
 }
 
-void ObjectInfoBase::initialize()
+void RCObjectInfoBase::initialize()
 {
     x = 0;
     y = 0;
@@ -54,20 +54,20 @@ void ObjectInfoBase::initialize()
     dist.initialize();
 }
 
-ObjectInfo::ObjectInfo() : ObjectInfoBase()
+RCObjectInfo::RCObjectInfo() : RCObjectInfoBase()
 {
 
 }
 
-ObjectInfo::~ObjectInfo()
+RCObjectInfo::~RCObjectInfo()
 {
 
 }
 
-CharacterInfo::CharacterInfo() : ObjectInfoBase()
+CharacterInfo::CharacterInfo() : RCObjectInfoBase()
 {
     which_robot = "";
-    ObjectInfo objectTemp;
+    RCObjectInfo objectTemp;
     for(int i = 0; i < StrE::objectSize; i++)
     {
         objectTemp.name = StrE::object[i];
@@ -93,8 +93,8 @@ void CharacterInfo::initialize()
     exist_flag = false;
     theta.initialize();
     dist.initialize();
-    for(std::map<std::string, ObjectInfo>::iterator it = object.begin(); it != object.end(); it++)it->second.initialize();
-    for(std::map<std::string, ObjectInfo>::iterator it = enemy.begin(); it != enemy.end(); it++)it->second.initialize();  
+    for(std::map<std::string, RCObjectInfo>::iterator it = object.begin(); it != object.end(); it++)it->second.initialize();
+    for(std::map<std::string, RCObjectInfo>::iterator it = enemy.begin(); it != enemy.end(); it++)it->second.initialize();  
 }
 
 NormalCharacterBase::NormalCharacterBase()
@@ -220,13 +220,13 @@ void NormalCharacterBase::testShow()
         , it->second->which_robot.c_str(), it->second->name.c_str(), it->second->x, it->second->y, it->second->exist_flag
         , it->second->theta.local, it->second->theta.global, it->second->dist.local, it->second->dist.global);
 
-        for(std::map<std::string, ObjectInfo>::iterator itt = it->second->object.begin(); itt != it->second->object.end(); itt++)
+        for(std::map<std::string, RCObjectInfo>::iterator itt = it->second->object.begin(); itt != it->second->object.end(); itt++)
         {
             std::printf("%-10s {%-10sx = %-8.2f, y = %-8.2f, exist_flag = %-d, theta[ local = %-8.2f, global = %-8.2f], dist[ local = %-8.2f, global = %-8.2f]}\n"
             , it->second->name.c_str(), itt->second.name.c_str(), itt->second.x, itt->second.y, itt->second.exist_flag
             , itt->second.theta.local, itt->second.theta.global, itt->second.dist.local, itt->second.dist.global);
         }
-        for(std::map<std::string, ObjectInfo>::iterator itt = it->second->enemy.begin(); itt != it->second->enemy.end(); itt++)
+        for(std::map<std::string, RCObjectInfo>::iterator itt = it->second->enemy.begin(); itt != it->second->enemy.end(); itt++)
         {
             std::printf("%-10s {%-10sx = %-8.2f, y = %-8.2f, exist_flag = %-d, theta[ local = %-8.2f, global = %-8.2f], dist[ local = %-8.2f, global = %-8.2f]}\n"
             , it->second->name.c_str(), itt->second.name.c_str(), itt->second.x, itt->second.y, itt->second.exist_flag

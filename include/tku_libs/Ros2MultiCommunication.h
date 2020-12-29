@@ -11,7 +11,6 @@
 #include "tku_libs/RobotCupInfo.h"
 #include "tku_msgs/Ros2MultiCommunication.h"
 
-
 class Ros2MultiCommunicationBase
 {
     public:

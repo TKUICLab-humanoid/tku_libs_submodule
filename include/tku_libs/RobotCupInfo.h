@@ -34,7 +34,7 @@ class StrE
         static unsigned int PRSSize;
 };
 
-class ObjectInfoBase
+class RCObjectInfoBase
 {
     class WhitchData
     {
@@ -50,8 +50,8 @@ class ObjectInfoBase
     };
 
     public:
-        ObjectInfoBase();
-        ~ObjectInfoBase();
+        RCObjectInfoBase();
+        ~RCObjectInfoBase();
 
         virtual void initialize();
 
@@ -64,14 +64,14 @@ class ObjectInfoBase
         WhitchData dist;
 };
 
-class ObjectInfo : public ObjectInfoBase
+class RCObjectInfo : public RCObjectInfoBase
 {
 	public:
-        ObjectInfo();
-        ~ObjectInfo();
+        RCObjectInfo();
+        ~RCObjectInfo();
 };
 
-class CharacterInfo : public ObjectInfoBase
+class CharacterInfo : public RCObjectInfoBase
 {
 	public:
         CharacterInfo();
@@ -81,8 +81,8 @@ class CharacterInfo : public ObjectInfoBase
 
     public:
         std::string which_robot;
-        std::map<std::string, ObjectInfo> object;
-        std::map<std::string, ObjectInfo> enemy;
+        std::map<std::string, RCObjectInfo> object;
+        std::map<std::string, RCObjectInfo> enemy;
 };
 
 class NormalCharacterBase
