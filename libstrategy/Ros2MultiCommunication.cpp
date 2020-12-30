@@ -98,7 +98,7 @@ void Ros2MultiCommunicationBase::saveCallBackData(const tku_msgs::Ros2MultiCommu
 {
     for(int i = 0; i < unknownRobot.who.size(); i++)
     {
-        if(unknownRobot.who[i].name != StrE::character[(int)ECharacter::attacker] && unknownRobot.who[i].name != StrE::character[(int)ECharacter::suporter1] && unknownRobot.who[i].name != StrE::character[(int)ECharacter::suporter2]
+        if(unknownRobot.who[i].name != StrE::character[(int)ECharacter::attacker] && unknownRobot.who[i].name != StrE::character[(int)ECharacter::supporter1] && unknownRobot.who[i].name != StrE::character[(int)ECharacter::supporter2]
          && unknownRobot.who[i].name != StrE::character[(int)ECharacter::defender] && unknownRobot.who[i].name != StrE::character[(int)ECharacter::free] && unknownRobot.who[i].name != StrE::character[(int)ECharacter::null])break;
         robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->which_robot = unknownRobot.who[i].which_robot;
         robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->name = unknownRobot.who[i].name;

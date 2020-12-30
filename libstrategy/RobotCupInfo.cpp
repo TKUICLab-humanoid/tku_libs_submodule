@@ -1,9 +1,9 @@
 #include "tku_libs/RobotCupInfo.h"
 
-std::string StrE::object[]    = {"goal", "ball"};
+std::string StrE::object[]    = {"goal", "soccer"};
 std::string StrE::enemy[]     = {"enemy1", "enemy2", "enemy3", "enemy4"};
 std::string StrE::robot[]     = {"robot1", "robot2", "robot3", "robot4"};
-std::string StrE::character[] = {"myself", "attacker", "suporter1", "suporter2", "defender", "free", "null"};
+std::string StrE::character[] = {"myself", "attacker", "supporter1", "supporter2", "defender", "free", "null"};
 std::string StrE::PRS[]       = {"RA", "R12", "R13", "R14", "R23", "R24", "R34", "R1", "R2", "R3", "R4", "R"};
 unsigned int StrE::objectSize = sizeof(StrE::object)/sizeof(StrE::object[0]);
 unsigned int StrE::enemySize = sizeof(StrE::enemy)/sizeof(StrE::enemy[0]);
@@ -209,7 +209,7 @@ void NormalCharacterBase::testShow()
     for(std::map<std::string, CharacterInfo*>::iterator it = who.begin(); it != who.end(); it++)
     {
         while(it->first == StrE::character[(int)ECharacter::myself]  || it->first == StrE::character[(int)ECharacter::attacker]
-         || it->first == StrE::character[(int)ECharacter::suporter1] || it->first == StrE::character[(int)ECharacter::suporter2]
+         || it->first == StrE::character[(int)ECharacter::supporter1] || it->first == StrE::character[(int)ECharacter::supporter2]
          || it->first == StrE::character[(int)ECharacter::defender]  || it->first == StrE::character[(int)ECharacter::free]
          || it->first == StrE::character[(int)ECharacter::null])
         {
