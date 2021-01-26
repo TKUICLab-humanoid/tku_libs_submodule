@@ -65,24 +65,25 @@ float Tool::readvalue(fstream &fin, string title, int mode)
                     }
                     else
                     {
-                        std::printf("\033[0;31mreadvalue() error\033[0m\n");
+                        std::printf("\033[0;31mreadvalue() Error!!\033[0m\n");
+                        std::printf("\033[0;31mPlease check your read file!!\033[0m\n");
                     }
                 }
                 else
                 {
-                    std::printf("\033[0;31mplease check '=' after and befor must need space\033[0m\n");
+                    std::printf("\033[0;31mreadvalue() Error!!\033[0m\n");
+                    std::printf("\033[0;31mPlease check '=' after and befor must need space!!\033[0m\n");
                     std::printf("\033[0;33m%s\033[0m\n", sline.c_str());
-                    std::printf("\033[0;31mplease ctrl c\033[0m\n");
                 }
             }
             else
             {
-                std::printf("\033[0;31mplease check your cpp and ini\033[0m\n");
+                std::printf("\033[0;31mreadvalue() Error!!\033[0m\n");
+                std::printf("\033[0;31mPlease check your cpp and ini!!\033[0m\n");
                 std::printf("\033[0;33mcpp str name is %s\033[0m\n", title.c_str());
-                std::printf("\033[0;33mini str name is %s\033[0m\n", sline.c_str());
-                std::printf("\033[0;31mplease ctrl c\033[0m\n");                
+                std::printf("\033[0;33mini str name is %s\033[0m\n", sline.c_str());             
             }
-            ros::WallDuration(1).sleep();
+            exit(1);
             break;
         case 1:
             do
@@ -103,52 +104,67 @@ float Tool::readvalue(fstream &fin, string title, int mode)
                     }
                     else
                     {
-                        std::printf("\033[0;31mreadvalue() error\033[0m\n");
+                        std::printf("\033[0;31mreadvalue() Error!!\033[0m\n");
+                        std::printf("\033[0;31mPlease check your read file!!\033[0m\n");
                     }
                 }
                 else
                 {
-                    std::printf("\033[0;31mplease check '=' after and befor must need space\033[0m\n");
+                    std::printf("\033[0;31mreadvalue() Error!!\033[0m\n");
+                    std::printf("\033[0;31mPlease check '=' after and befor must need space!!\033[0m\n");
                     std::printf("\033[0;33m%s\033[0m\n", sline.c_str());
-                    std::printf("\033[0;31mplease ctrl c\033[0m\n");
                 }
             }
             else
             {
-                std::printf("\033[0;31mplease check your cpp and ini\033[0m\n");
+                std::printf("\033[0;31mreadvalue() Error!!\033[0m\n");
+                std::printf("\033[0;31mPlease check your cpp and ini!!\033[0m\n");
                 std::printf("\033[0;33mcpp str name is %s\033[0m\n", title.c_str());
-                std::printf("\033[0;33mini str name is %s\033[0m\n", sline.c_str());
-                std::printf("\033[0;31mplease ctrl c\033[0m\n");                
+                std::printf("\033[0;33mini str name is %s\033[0m\n", sline.c_str());            
             }
-            ros::WallDuration(1).sleep();
+            exit(1);
             break;
         case 2:
-            while(1)
+        case 4:
+            fin.getline(line,sizeof(line),' ');
+            if((string)line == title)
             {
-                fin.getline(line,sizeof(line),' ');
-                if((string)line == title)
-                {
-                    fin.get(equal);
-                    if(equal == '=')
-                    {
-                        fin.getline(line,sizeof(line),'|');
-                        break;
-                    }
-                }
-            }
-            return atoi(line);
-            break;
-        case 3:
-            while(1)
-            {
-                fin.getline(line,sizeof(line),' ');
-                if((string)line == title)
+                fin.get(equal);
+                if(equal == '=')
                 {
                     fin.getline(line,sizeof(line),'|');
-                    break;
+                    return atoi(line);
                 }
             }
-            return atoi(line);
+            std::printf("\033[0;31mreadvalue() Error!!\033[0m\n");
+            std::printf("\033[0;31mPlease check your read file!!\033[0m\n");
+            if(mode == 2)
+            {
+                exit(1);
+            }
+            else
+            {
+                return -1;
+            }
+            break;
+        case 3:
+        case 5:
+            fin.getline(line,sizeof(line),' ');
+            if((string)line == title)
+            {
+                fin.getline(line,sizeof(line),'|');
+                return atoi(line);
+            }
+            std::printf("\033[0;31mreadvalue() Error!!\033[0m\n");
+            std::printf("\033[0;31mPlease check your read file!!\033[0m\n");
+            if(mode == 3)
+            {
+                exit(1);
+            }
+            else
+            {
+                return -1;
+            }
             break;
         default:
             break;
