@@ -8,7 +8,7 @@
 
 #include "tku_libs/TKU_tool.h"
 
-enum class EObject {goal, soccer};
+enum class EObject {soccer, goal};
 enum class EEnemy {enemy1, enemy2, enemy3, enemy4};
 enum class ERobot {robot1, robot2, robot3, robot4};
 enum class ECharacter {myself, attacker, supporter1, supporter2, defender, free, null};
@@ -45,8 +45,9 @@ class RCObjectInfoBase
             void initialize();
 
         public:
-            float local;
-            float global;
+            float x_pos;
+            float y_pos;
+            float theta;
     };
 
     public:
@@ -57,11 +58,9 @@ class RCObjectInfoBase
 
     public:
         std::string name;
-        float x;
-        float y;
         bool exist_flag;
-        WhitchData theta;
-        WhitchData dist;
+        WhitchData global;
+        WhitchData local;
 };
 
 class RCObjectInfo : public RCObjectInfoBase
