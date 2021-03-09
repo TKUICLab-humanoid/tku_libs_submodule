@@ -36,17 +36,17 @@ class StrE
 
 class RCObjectInfoBase
 {
-    class WhitchData
+    class WhichData
     {
         public:
-            WhitchData();
-            ~WhitchData();
+            WhichData();
+            ~WhichData();
 
             void initialize();
 
         public:
-            float x_pos;
-            float y_pos;
+            int x_pos;
+            int y_pos;
             float theta;
     };
 
@@ -59,8 +59,8 @@ class RCObjectInfoBase
     public:
         std::string name;
         bool exist_flag;
-        WhitchData global;
-        WhitchData local;
+        WhichData global;
+        WhichData local;
 };
 
 class RCObjectInfo : public RCObjectInfoBase

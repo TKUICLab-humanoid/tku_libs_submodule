@@ -13,23 +13,23 @@ unsigned int StrE::PRSSize = sizeof(StrE::PRS)/sizeof(StrE::PRS[0]);
 
 RobotCupInfo *RobotCupInfo::m_pInstance;
 
-RCObjectInfoBase::WhitchData::WhitchData()
+RCObjectInfoBase::WhichData::WhichData()
 {
     x_pos = 0;
     y_pos = 0;
-    theta = 0;
+    theta = 0.0;
 }
 
-RCObjectInfoBase::WhitchData::~WhitchData()
+RCObjectInfoBase::WhichData::~WhichData()
 {
 
 }
 
-void RCObjectInfoBase::WhitchData::initialize()
+void RCObjectInfoBase::WhichData::initialize()
 {
     x_pos = 0;
     y_pos = 0;
-    theta = 0;
+    theta = 0.0;
 }
 
 RCObjectInfoBase::RCObjectInfoBase()
@@ -212,21 +212,21 @@ void NormalCharacterBase::testShow()
             it++;
             if(it == who.end())return;
         }
-        std::printf("%-10s {%-10sexist_flag = %-d, global[ x_pos = %-8.2f, y_pos = %-8.2f, theta = %-8.2f], local[ x_pos = %-8.2f, y_pos = %-8.2f, theta = %-8.2f]}\n"
+        std::printf("%-10s {%-10sexist_flag = %-d, global[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f], local[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f]}\n"
         , it->second->which_robot.c_str(), it->second->name.c_str(), it->second->exist_flag
         , it->second->global.x_pos, it->second->global.y_pos, it->second->global.theta
         , it->second->local.x_pos, it->second->local.y_pos, it->second->local.theta);
 
         for(std::map<std::string, RCObjectInfo>::iterator itt = it->second->object.begin(); itt != it->second->object.end(); itt++)
         {
-            std::printf("%-10s {%-10sexist_flag = %-d, global[ x_pos = %-8.2f, y_pos = %-8.2f, theta = %-8.2f], local[ x_pos = %-8.2f, y_pos = %-8.2f, theta = %-8.2f]}\n"
+            std::printf("%-10s {%-10sexist_flag = %-d, global[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f], local[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f]}\n"
             , it->second->name.c_str(), itt->second.name.c_str(), itt->second.exist_flag
             , itt->second.global.x_pos, itt->second.global.y_pos, itt->second.global.theta
             , itt->second.local.x_pos, itt->second.local.y_pos, itt->second.local.theta);
         }
         for(std::map<std::string, RCObjectInfo>::iterator itt = it->second->enemy.begin(); itt != it->second->enemy.end(); itt++)
         {
-            std::printf("%-10s {%-10sexist_flag = %-d, global[ x_pos = %-8.2f, y_pos = %-8.2f, theta = %-8.2f], local[ x_pos = %-8.2f, y_pos = %-8.2f, theta = %-8.2f]}\n"
+            std::printf("%-10s {%-10sexist_flag = %-d, global[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f], local[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f]}\n"
             , it->second->name.c_str(), itt->second.name.c_str(), itt->second.exist_flag
             , itt->second.global.x_pos, itt->second.global.y_pos, itt->second.global.theta
             , itt->second.local.x_pos, itt->second.local.y_pos, itt->second.local.theta);
