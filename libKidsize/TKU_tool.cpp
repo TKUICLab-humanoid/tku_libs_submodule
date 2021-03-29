@@ -57,15 +57,22 @@ void Tool::initParameterPath()
     }
     strcpy(source, parameterPath.c_str());
 	loc = strstr(source, search);
-    src = source;
-    dst = standPath;
-    length = strlen(source)-strlen(loc)+strlen(search);
-    while(length--)
+    if(loc != NULL)
     {
-        *(dst++) = *(src++);
+        src = source;
+        dst = standPath;
+        length = strlen(source)-strlen(loc)+strlen(search);
+        while(length--)
+        {
+            *(dst++) = *(src++);
+        }
+        *(dst++) = '\0';
+        strcat(standPath, "Standmotion");
     }
-    *(dst++) = '\0';
-    strcat(standPath, "Standmotion");
+    else
+    {
+        strcpy(standPath, "/home/iclab/Desktop/Standmotion");
+    }
 
     std::printf("parameterPath is %s\n", parameterPath.c_str());
     std::printf("standPath is %s\n", standPath);
