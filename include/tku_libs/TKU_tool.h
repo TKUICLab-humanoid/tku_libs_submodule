@@ -11,8 +11,6 @@
 #include <iostream>
 #include <string>
 
-#define STANDPATH "/home/iclab/Desktop/Standmotion"
-
 using namespace std;
 
 class Tool
@@ -22,11 +20,16 @@ class Tool
         ~Tool();
 
         string getPackagePath(string package_name);
+        void initParameterPath();
         float readvalue(fstream &fin, string title,int mode);
         void Delay(int timedelay);
 
+    public:
+        string parameterPath;
+        char standPath[200];
+
 	private:
-		string package_path;
+		string packagePath;
 };
 
 class ToolInstance : public Tool
