@@ -134,7 +134,7 @@ class StrategyInfo
         DIOInput DIOValue;
         unsigned char *label_model;
         cv_bridge::CvImagePtr cvimg;
-        std::vector<ObjectInfo> soccer_info;
+        std::vector<ObjectInfo> objectInfo;
 
         friend class RosCommunication;
     private:

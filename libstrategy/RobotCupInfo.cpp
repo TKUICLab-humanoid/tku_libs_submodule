@@ -1,13 +1,13 @@
 #include "tku_libs/RobotCupInfo.h"
 
+std::string StrE::robot[]     = {"robot1", "robot2", "robot3", "robot4"};
 std::string StrE::object[]    = {"soccer", "goal"};
 std::string StrE::enemy[]     = {"enemy1", "enemy2", "enemy3", "enemy4"};
-std::string StrE::robot[]     = {"robot1", "robot2", "robot3", "robot4"};
 std::string StrE::character[] = {"myself", "attacker", "supporter1", "supporter2", "defender", "free", "null"};
 std::string StrE::PRS[]       = {"RA", "R12", "R13", "R14", "R23", "R24", "R34", "R1", "R2", "R3", "R4", "R"};
+unsigned int StrE::robotSize = sizeof(StrE::robot)/sizeof(StrE::robot[0]);
 unsigned int StrE::objectSize = sizeof(StrE::object)/sizeof(StrE::object[0]);
 unsigned int StrE::enemySize = sizeof(StrE::enemy)/sizeof(StrE::enemy[0]);
-unsigned int StrE::robotSize = sizeof(StrE::robot)/sizeof(StrE::robot[0]);
 unsigned int StrE::characterSize = sizeof(StrE::character)/sizeof(StrE::character[0]);
 unsigned int StrE::PRSSize = sizeof(StrE::PRS)/sizeof(StrE::PRS[0]);
 
@@ -65,7 +65,13 @@ RCObjectInfo::~RCObjectInfo()
 CharacterInfo::CharacterInfo() : RCObjectInfoBase()
 {
     which_robot = "";
+    weight = 0.0;
     RCObjectInfo objectTemp;
+    for(int i = 0; i < StrE::robotSize; i++)
+    {
+        objectTemp.name = StrE::robot[i];
+        partner[StrE::robot[i]] = objectTemp;
+    }
     for(int i = 0; i < StrE::objectSize; i++) 
     {
         objectTemp.name = StrE::object[i];
@@ -85,10 +91,12 @@ CharacterInfo::~CharacterInfo()
 
 void CharacterInfo::initialize()
 {
+    weight = 0.0;
     name = StrE::character[(int)ECharacter::null];
     exist_flag = false;
     global.initialize();
     local.initialize();
+    for(std::map<std::string, RCObjectInfo>::iterator it = partner.begin(); it != partner.end(); it++)it->second.initialize();
     for(std::map<std::string, RCObjectInfo>::iterator it = object.begin(); it != object.end(); it++)it->second.initialize();
     for(std::map<std::string, RCObjectInfo>::iterator it = enemy.begin(); it != enemy.end(); it++)it->second.initialize();  
 }
@@ -212,21 +220,31 @@ void NormalCharacterBase::testShow()
             it++;
             if(it == who.end())return;
         }
-        std::printf("%-10s {%-10sexist_flag = %-d, global[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f], local[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f]}\n"
-        , it->second->which_robot.c_str(), it->second->name.c_str(), it->second->exist_flag
+        std::printf("%-10s {%-10s weight = %-1.3f, global[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f], local[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f]}\n"
+        , it->second->which_robot.c_str(), it->second->name.c_str(), it->second->weight
         , it->second->global.x_pos, it->second->global.y_pos, it->second->global.theta
         , it->second->local.x_pos, it->second->local.y_pos, it->second->local.theta);
 
+        for(std::map<std::string, RCObjectInfo>::iterator itt = it->second->partner.begin(); itt != it->second->partner.end(); itt++)
+        {
+            if(itt->first != it->second->which_robot)
+            {
+                std::printf("%-10s {%-10s exist_flag = %-d, global[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f], local[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f]}\n"
+                , it->second->name.c_str(), itt->second.name.c_str(), itt->second.exist_flag
+                , itt->second.global.x_pos, itt->second.global.y_pos, itt->second.global.theta
+                , itt->second.local.x_pos, itt->second.local.y_pos, itt->second.local.theta);
+            }
+        }
         for(std::map<std::string, RCObjectInfo>::iterator itt = it->second->object.begin(); itt != it->second->object.end(); itt++)
         {
-            std::printf("%-10s {%-10sexist_flag = %-d, global[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f], local[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f]}\n"
+            std::printf("%-10s {%-10s exist_flag = %-d, global[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f], local[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f]}\n"
             , it->second->name.c_str(), itt->second.name.c_str(), itt->second.exist_flag
             , itt->second.global.x_pos, itt->second.global.y_pos, itt->second.global.theta
             , itt->second.local.x_pos, itt->second.local.y_pos, itt->second.local.theta);
         }
         for(std::map<std::string, RCObjectInfo>::iterator itt = it->second->enemy.begin(); itt != it->second->enemy.end(); itt++)
         {
-            std::printf("%-10s {%-10sexist_flag = %-d, global[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f], local[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f]}\n"
+            std::printf("%-10s {%-10s exist_flag = %-d, global[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f], local[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f]}\n"
             , it->second->name.c_str(), itt->second.name.c_str(), itt->second.exist_flag
             , itt->second.global.x_pos, itt->second.global.y_pos, itt->second.global.theta
             , itt->second.local.x_pos, itt->second.local.y_pos, itt->second.local.theta);

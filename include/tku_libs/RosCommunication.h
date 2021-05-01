@@ -50,7 +50,7 @@ class RosCommunication
 		void DIOackFunction(const std_msgs::Int16 &msg);
 		void getRobotPos(const tku_msgs::RobotPos &msg);
 		void getGoalPoint(const tku_msgs::SetGoalPoint &msg);
-		void getSoccerData(const tku_msgs::SoccerDataList &msg);
+		void getObjectData(const tku_msgs::SoccerDataList &msg);
 		void sensorPackageFunction(const tku_msgs::SensorPackage &msg);
         
 	private:

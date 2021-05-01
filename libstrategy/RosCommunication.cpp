@@ -51,7 +51,7 @@ void RosCommunication::initialize()
     DIO_ack_sub = nh.subscribe("/package/FPGAack", 10, &RosCommunication::DIOackFunction,this);
     robot_position_sub = nh.subscribe("/localization/robotpos", 10, &RosCommunication::getRobotPos,this);
     goal_point_sub = nh.subscribe("/web/setgoalpoint", 10, &RosCommunication::getGoalPoint,this);
-    soccer_data_sub = nh.subscribe("/vision/soccer_topic", 10, &RosCommunication::getSoccerData,this);
+    soccer_data_sub = nh.subscribe("/vision/soccer_topic", 10, &RosCommunication::getObjectData,this);
     sensor_sub = nh.subscribe("/package/sensorpackage", 10, &RosCommunication::sensorPackageFunction,this);
 
     strategy_info = StrategyInfoInstance::getInstance();
@@ -268,7 +268,7 @@ void RosCommunication::getGoalPoint(const tku_msgs::SetGoalPoint &msg)
     }
 }
 
-void RosCommunication::getSoccerData(const tku_msgs::SoccerDataList &msg)
+void RosCommunication::getObjectData(const tku_msgs::SoccerDataList &msg)
 {
     for(int i = 0; i < msg.object_cnt; i++)
     {
@@ -292,7 +292,7 @@ void RosCommunication::getSoccerData(const tku_msgs::SoccerDataList &msg)
         tmp.x_distance = msg.ObjectList[i].distance.x_dis;
         tmp.y_distance = msg.ObjectList[i].distance.y_dis;
         tmp.distance = msg.ObjectList[i].distance.dis;
-        strategy_info->soccer_info.push_back(tmp);
+        strategy_info->objectInfo.push_back(tmp);
     }
 }
 

@@ -8,9 +8,9 @@
 
 #include "tku_libs/TKU_tool.h"
 
+enum class ERobot {robot1, robot2, robot3, robot4};
 enum class EObject {soccer, goal};
 enum class EEnemy {enemy1, enemy2, enemy3, enemy4};
-enum class ERobot {robot1, robot2, robot3, robot4};
 enum class ECharacter {myself, attacker, supporter1, supporter2, defender, free, null};
 enum class PRS {RA, R12, R13, R14, R23, R24, R34, R1, R2, R3, R4, R};
 //PRS = Partner Robot State
@@ -80,6 +80,8 @@ class CharacterInfo : public RCObjectInfoBase
 
     public:
         std::string which_robot;
+        float weight;
+        std::map<std::string, RCObjectInfo> partner;
         std::map<std::string, RCObjectInfo> object;
         std::map<std::string, RCObjectInfo> enemy;
 };
