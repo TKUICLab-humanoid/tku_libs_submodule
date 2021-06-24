@@ -282,6 +282,12 @@ void RosCommunication::getObjectData(const tku_msgs::SoccerDataList &msg)
                 tmp.object_mode = ObjectMode::GOAL;
                 break;
             case 2:
+                tmp.object_mode = ObjectMode::PARTNER;
+                break;
+            case 3:
+                tmp.object_mode = ObjectMode::ENEMY;
+                break;
+            case 4:
                 tmp.object_mode = ObjectMode::NOTHING;
                 break;
         }

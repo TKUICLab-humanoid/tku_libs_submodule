@@ -81,8 +81,8 @@ class CharacterInfo : public RCObjectInfoBase
     public:
         std::string which_robot;
         float weight;
-        std::map<std::string, RCObjectInfo> partner;
         std::map<std::string, RCObjectInfo> object;
+        std::map<std::string, RCObjectInfo> partner;
         std::map<std::string, RCObjectInfo> enemy;
 };
 
@@ -105,7 +105,7 @@ class NormalCharacterBase
     public:
         std::map<std::string, CharacterInfo*> who;
 
-    private:
+    // private:
         std::map<std::string, TimeClass> callBackTimer;
 };
 

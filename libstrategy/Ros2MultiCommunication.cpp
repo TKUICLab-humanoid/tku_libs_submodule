@@ -64,19 +64,6 @@ void Ros2MultiCommunicationBase::sendRobotCupInfo(RobotCupInfo *robotCupInfo)
     characterTemp.local.x_pos = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->local.x_pos;
     characterTemp.local.y_pos = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->local.y_pos;
     characterTemp.local.theta = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->local.theta;
-
-    for(int i = 0; i < StrE::robotSize; i++)
-    {
-        partnerTemp.name = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->partner[StrE::robot[i]].name;
-        partnerTemp.exist_flag = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->partner[StrE::robot[i]].exist_flag;
-        partnerTemp.global.x_pos = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->partner[StrE::robot[i]].global.x_pos;
-        partnerTemp.global.y_pos = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->partner[StrE::robot[i]].global.y_pos;
-        partnerTemp.global.theta = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->partner[StrE::robot[i]].global.theta;
-        partnerTemp.local.x_pos = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->partner[StrE::robot[i]].local.x_pos;
-        partnerTemp.local.y_pos = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->partner[StrE::robot[i]].local.y_pos;
-        partnerTemp.local.theta = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->partner[StrE::robot[i]].local.theta;
-        characterTemp.partner.push_back(partnerTemp);
-    }
     
     for(int i = 0; i < StrE::objectSize; i++)
     {
@@ -89,6 +76,19 @@ void Ros2MultiCommunicationBase::sendRobotCupInfo(RobotCupInfo *robotCupInfo)
         objectTemp.local.y_pos = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->object[StrE::object[i]].local.y_pos;
         objectTemp.local.theta = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->object[StrE::object[i]].local.theta;
         characterTemp.object.push_back(objectTemp);
+    }
+
+    for(int i = 0; i < StrE::robotSize; i++)
+    {
+        partnerTemp.name = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->partner[StrE::robot[i]].name;
+        partnerTemp.exist_flag = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->partner[StrE::robot[i]].exist_flag;
+        partnerTemp.global.x_pos = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->partner[StrE::robot[i]].global.x_pos;
+        partnerTemp.global.y_pos = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->partner[StrE::robot[i]].global.y_pos;
+        partnerTemp.global.theta = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->partner[StrE::robot[i]].global.theta;
+        partnerTemp.local.x_pos = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->partner[StrE::robot[i]].local.x_pos;
+        partnerTemp.local.y_pos = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->partner[StrE::robot[i]].local.y_pos;
+        partnerTemp.local.theta = robotCupInfo->characterInfo->who[StrE::character[(int)ECharacter::myself]]->partner[StrE::robot[i]].local.theta;
+        characterTemp.partner.push_back(partnerTemp);
     }
     
     for(int i = 0; i < StrE::enemySize; i++)
@@ -123,19 +123,6 @@ void Ros2MultiCommunicationBase::saveCallBackData(const tku_msgs::Ros2MultiCommu
         robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->local.x_pos = unknownRobot.who[i].local.x_pos;
         robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->local.y_pos = unknownRobot.who[i].local.y_pos;
         robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->local.theta = unknownRobot.who[i].local.theta;
-
-        for(int j = 0; j < unknownRobot.who[i].partner.size(); j++)
-        {
-            if(unknownRobot.who[i].partner[j].name == "null")break;
-            robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->partner[unknownRobot.who[i].partner[j].name].name = unknownRobot.who[i].partner[j].name;
-            robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->partner[unknownRobot.who[i].partner[j].name].exist_flag = unknownRobot.who[i].partner[j].exist_flag;
-            robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->partner[unknownRobot.who[i].partner[j].name].global.x_pos = unknownRobot.who[i].partner[j].global.x_pos;
-            robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->partner[unknownRobot.who[i].partner[j].name].global.y_pos = unknownRobot.who[i].partner[j].global.y_pos;
-            robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->partner[unknownRobot.who[i].partner[j].name].global.theta = unknownRobot.who[i].partner[j].global.theta;
-            robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->partner[unknownRobot.who[i].partner[j].name].local.x_pos = unknownRobot.who[i].partner[j].local.x_pos;
-            robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->partner[unknownRobot.who[i].partner[j].name].local.y_pos = unknownRobot.who[i].partner[j].local.y_pos;
-            robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->partner[unknownRobot.who[i].partner[j].name].local.theta = unknownRobot.who[i].partner[j].local.theta;
-        }
         
         for(int j = 0; j < unknownRobot.who[i].object.size(); j++)
         {
@@ -148,6 +135,19 @@ void Ros2MultiCommunicationBase::saveCallBackData(const tku_msgs::Ros2MultiCommu
             robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->object[unknownRobot.who[i].object[j].name].local.x_pos = unknownRobot.who[i].object[j].local.x_pos;
             robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->object[unknownRobot.who[i].object[j].name].local.y_pos = unknownRobot.who[i].object[j].local.y_pos;
             robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->object[unknownRobot.who[i].object[j].name].local.theta = unknownRobot.who[i].object[j].local.theta;
+        }
+
+        for(int j = 0; j < unknownRobot.who[i].partner.size(); j++)
+        {
+            if(unknownRobot.who[i].partner[j].name == "null")break;
+            robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->partner[unknownRobot.who[i].partner[j].name].name = unknownRobot.who[i].partner[j].name;
+            robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->partner[unknownRobot.who[i].partner[j].name].exist_flag = unknownRobot.who[i].partner[j].exist_flag;
+            robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->partner[unknownRobot.who[i].partner[j].name].global.x_pos = unknownRobot.who[i].partner[j].global.x_pos;
+            robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->partner[unknownRobot.who[i].partner[j].name].global.y_pos = unknownRobot.who[i].partner[j].global.y_pos;
+            robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->partner[unknownRobot.who[i].partner[j].name].global.theta = unknownRobot.who[i].partner[j].global.theta;
+            robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->partner[unknownRobot.who[i].partner[j].name].local.x_pos = unknownRobot.who[i].partner[j].local.x_pos;
+            robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->partner[unknownRobot.who[i].partner[j].name].local.y_pos = unknownRobot.who[i].partner[j].local.y_pos;
+            robotCupInfo->characterInfo->who[unknownRobot.who[i].which_robot]->partner[unknownRobot.who[i].partner[j].name].local.theta = unknownRobot.who[i].partner[j].local.theta;
         }
 
         for(int j = 0; j < unknownRobot.who[i].enemy.size(); j++)

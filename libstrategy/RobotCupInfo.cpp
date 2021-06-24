@@ -67,15 +67,15 @@ CharacterInfo::CharacterInfo() : RCObjectInfoBase()
     which_robot = "";
     weight = 0.0;
     RCObjectInfo objectTemp;
-    for(int i = 0; i < StrE::robotSize; i++)
-    {
-        objectTemp.name = StrE::robot[i];
-        partner[StrE::robot[i]] = objectTemp;
-    }
     for(int i = 0; i < StrE::objectSize; i++) 
     {
         objectTemp.name = StrE::object[i];
         object[StrE::object[i]] = objectTemp;
+    }
+    for(int i = 0; i < StrE::robotSize; i++)
+    {
+        objectTemp.name = StrE::robot[i];
+        partner[StrE::robot[i]] = objectTemp;
     }
     for(int i = 0; i < StrE::enemySize; i++)
     {
@@ -96,9 +96,9 @@ void CharacterInfo::initialize()
     exist_flag = false;
     global.initialize();
     local.initialize();
-    for(std::map<std::string, RCObjectInfo>::iterator it = partner.begin(); it != partner.end(); it++)it->second.initialize();
     for(std::map<std::string, RCObjectInfo>::iterator it = object.begin(); it != object.end(); it++)it->second.initialize();
-    for(std::map<std::string, RCObjectInfo>::iterator it = enemy.begin(); it != enemy.end(); it++)it->second.initialize();  
+    for(std::map<std::string, RCObjectInfo>::iterator it = partner.begin(); it != partner.end(); it++)it->second.initialize();
+    for(std::map<std::string, RCObjectInfo>::iterator it = enemy.begin(); it != enemy.end(); it++)it->second.initialize();
 }
 
 NormalCharacterBase::NormalCharacterBase()
@@ -225,6 +225,13 @@ void NormalCharacterBase::testShow()
         , it->second->global.x_pos, it->second->global.y_pos, it->second->global.theta
         , it->second->local.x_pos, it->second->local.y_pos, it->second->local.theta);
 
+        for(std::map<std::string, RCObjectInfo>::iterator itt = it->second->object.begin(); itt != it->second->object.end(); itt++)
+        {
+            std::printf("%-10s {%-10s exist_flag = %-d, global[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f], local[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f]}\n"
+            , it->second->name.c_str(), itt->second.name.c_str(), itt->second.exist_flag
+            , itt->second.global.x_pos, itt->second.global.y_pos, itt->second.global.theta
+            , itt->second.local.x_pos, itt->second.local.y_pos, itt->second.local.theta);
+        }
         for(std::map<std::string, RCObjectInfo>::iterator itt = it->second->partner.begin(); itt != it->second->partner.end(); itt++)
         {
             if(itt->first != it->second->which_robot)
@@ -234,13 +241,6 @@ void NormalCharacterBase::testShow()
                 , itt->second.global.x_pos, itt->second.global.y_pos, itt->second.global.theta
                 , itt->second.local.x_pos, itt->second.local.y_pos, itt->second.local.theta);
             }
-        }
-        for(std::map<std::string, RCObjectInfo>::iterator itt = it->second->object.begin(); itt != it->second->object.end(); itt++)
-        {
-            std::printf("%-10s {%-10s exist_flag = %-d, global[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f], local[ x_pos = %-10d, y_pos = %-10d, theta = %-8.2f]}\n"
-            , it->second->name.c_str(), itt->second.name.c_str(), itt->second.exist_flag
-            , itt->second.global.x_pos, itt->second.global.y_pos, itt->second.global.theta
-            , itt->second.local.x_pos, itt->second.local.y_pos, itt->second.local.theta);
         }
         for(std::map<std::string, RCObjectInfo>::iterator itt = it->second->enemy.begin(); itt != it->second->enemy.end(); itt++)
         {
@@ -273,7 +273,7 @@ NormalCharacter::~NormalCharacter()
 RobotCupInfoBase::RobotCupInfoBase()
 {
     characterInfo = new NormalCharacter();
-    std::string strTemp = "rosparam load " + ros::package::getPath("strategy") + "/Parameter/RobotCupInfo.yaml /robotCupInfo";
+    std::string strTemp = "rosparam load " + ros::package::getPath("localization") + "/Parameter/RobotCupInfo.yaml /robotCupInfo";
     system(strTemp.c_str());
     if (nh.getParam("/robotCupInfo", paramData) && paramData.getType() == XmlRpc::XmlRpcValue::TypeArray)
     {

@@ -57,6 +57,8 @@ enum class ObjectMode
 {
     SOCCER,
     GOAL,
+    PARTNER,
+    ENEMY,
     NOTHING
 };
 typedef union
