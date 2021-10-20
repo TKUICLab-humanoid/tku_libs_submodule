@@ -168,26 +168,26 @@ void RosCommunication::sendSingleMotor(int ID, int Position, int Speed)
 void RosCommunication::sendSensorSet(int R, int P, int Y, bool DesireSet, bool IMUReset, bool ForceState, bool GainSet)
 {
     tku_msgs::SensorSet msg;
-    msg.Roll  = R;
-    msg.Pitch = P;
-    msg.Yaw   = Y;
-    msg.DesireSet = DesireSet;
-    msg.IMUReset = IMUReset;
-    msg.ForceState = ForceState;
-    msg.GainSet = GainSet;
+    // msg.Roll  = R;
+    // msg.Pitch = P;
+    // msg.Yaw   = Y;
+    // msg.DesireSet = DesireSet;
+    // msg.IMUReset = IMUReset;
+    // msg.ForceState = ForceState;
+    // msg.GainSet = GainSet;
     sensor_pub.publish(msg);
 }
 
 void RosCommunication::sendSensorReset()
 {
     tku_msgs::SensorSet msg;
-    msg.Roll  = 0;
-    msg.Pitch = 0;
-    msg.Yaw   = 0;
-    msg.DesireSet = false;
-    msg.IMUReset = true;
-    msg.ForceState = false;
-    msg.GainSet = false;
+    // msg.Roll  = 0;
+    // msg.Pitch = 0;
+    // msg.Yaw   = 0;
+    // msg.DesireSet = false;
+    // msg.IMUReset = true;
+    // msg.ForceState = false;
+    // msg.GainSet = false;
     sensor_pub.publish(msg);
 }
 
