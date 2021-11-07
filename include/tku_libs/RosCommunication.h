@@ -40,7 +40,7 @@ class RosCommunication
 		void sendBodySector(int Sector);
 		void sendHandSpeed(int Sector, int Speed);
 		void sendSingleMotor(int ID, int Position, int Speed);
-		void sendSensorSet(int R, int P, int Y, bool DesireSet = true, bool IMUReset = false, bool ForceState = false, bool GainSet = false);
+		void sendSensorSet(float P, float I, float D, int modeset);
 		void sendSensorReset();
 
         void getObject(const tku_msgs::ObjectList &msg);
