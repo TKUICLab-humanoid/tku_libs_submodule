@@ -36,7 +36,7 @@ string Tool::getPackagePath(string package_name)
 		std::printf("Tool packagePath is empty\n");
 		return "N";
 	} 
-	return packagePath + "/Parameter";
+	return packagePath; //+ "/Parameter" 2023/05/31 為了指向每個項目的Parameter,所以指向每個項目的參數在motionpackage輸入
 }
 
 void Tool::initParameterPath()
