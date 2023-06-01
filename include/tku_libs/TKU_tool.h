@@ -35,7 +35,9 @@ class Tool
 class ToolInstance : public Tool
 {
 	public:
-		ToolInstance() : Tool(){}
+		ToolInstance() : Tool(){
+            
+        }
 		~ToolInstance(){}
 		static ToolInstance* getInstance();
 		static void deleteInstance();
