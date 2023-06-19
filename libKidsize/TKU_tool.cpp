@@ -4,6 +4,13 @@ ToolInstance* ToolInstance::m_pInstance;
 
 Tool::Tool()
 {
+    // printf("%d",ros::isInitialized());
+    // int argc = 0;
+    // char **argv = NULL;
+    // ros::init(argc, argv, "Tool");
+    // ros::NodeHandle nh;
+    // std::string location;
+    // nh.getParam("/location", location);
     initParameterPath();
 }
 
@@ -36,7 +43,7 @@ string Tool::getPackagePath(string package_name)
 		std::printf("Tool packagePath is empty\n");
 		return "N";
 	} 
-	return packagePath + "/Parameter";
+	return packagePath; //+ "/Parameter" 2023/05/31 為了指向每個項目的Parameter,所以指向每個項目的參數在motionpackage輸入
 }
 
 void Tool::initParameterPath()
@@ -48,13 +55,13 @@ void Tool::initParameterPath()
     char *dst;
     int length;
 
-	parameterPath = getPackagePath("strategy");
-    if(parameterPath == "N")
-    {
-        std::printf("\033[0;31mTool initParameterPath() Error!!\033[0m\n");
-        std::printf("\033[0;31mparameterPath is NULL!!\033[0m\n");
-        exit(1);
-    }
+	// parameterPath = getPackagePath(location.c_str());
+    // if(parameterPath == "N")
+    // {
+    //     std::printf("\033[0;31mTool initParameterPath() Error!!\033[0m\n");
+    //     std::printf("\033[0;31mparameterPath is NULL!!\033[0m\n");
+    //     exit(1);
+    // }
     strcpy(source, parameterPath.c_str());
 	loc = strstr(source, search);
     if(loc != NULL)
@@ -74,7 +81,7 @@ void Tool::initParameterPath()
         strcpy(standPath, "/home/iclab/Desktop/Standmotion");
     }
 
-    std::printf("parameterPath is %s\n", parameterPath.c_str());
+    // std::printf("parameterPath is %s\n", parameterPath.c_str());
     std::printf("standPath is %s\n", standPath);
 }
 
